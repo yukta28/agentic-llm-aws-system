@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant User
+    participant API as API Gateway
+    participant Lambda as Agent Lambda
+    participant DDB as DynamoDB
+    participant Bedrock as Amazon Bedrock
+    participant Tools as Tool Registry
+
+    User->>API: POST /agent/query
+    API->>Lambda: Invoke handler
+    Lambda->>DDB: Load state
+    Lambda->>Bedrock: Request next action
+    Bedrock-->>Lambda: Structured JSON action
+    Lambda->>Tools: Execute validated tool call
+    Tools-->>Lambda: Tool result
+    Lambda->>DDB: Persist state
+    Lambda-->>API: Final answer
+    API-->>User: Response

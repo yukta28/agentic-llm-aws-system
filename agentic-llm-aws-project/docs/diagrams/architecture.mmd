@@ -1,0 +1,12 @@
+flowchart TD
+    U[User / Client] --> APIGW[Amazon API Gateway]
+    APIGW --> L[Lambda: Agent Orchestrator]
+    L --> DDB[(DynamoDB: Session State)]
+    L --> B[Amazon Bedrock: LLM]
+    L --> T[Tool Registry]
+    T --> EXT[External APIs / Internal Services]
+    L --> MEM[Memory Layer]
+    MEM --> S3[(S3: Documents + Logs)]
+    MEM --> KB[Bedrock Knowledge Base / Vector Store]
+    L --> CW[CloudWatch: Logs + Metrics]
+    L --> APIGW
