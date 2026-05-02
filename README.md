@@ -4,6 +4,31 @@ An end-to-end reference project for building an **agentic AI system** with LLM r
 
 > Core idea: an agent is not “just a prompt.” It is a controlled loop over state, powered by an LLM, grounded by tools.
 
+
+## Visual architecture
+
+![Agentic LLM AWS architecture](docs/assets/architecture.svg)
+
+This project now includes a **real API tool** using Open-Meteo, so the agent can call live weather data instead of only mock functions.
+
+Try it locally:
+
+```bash
+python - <<'PY'
+from src.tools.weather_tool import get_current_weather
+print(get_current_weather("Seattle"))
+PY
+```
+
+Example request:
+
+```json
+{
+  "session_id": "demo-weather-1",
+  "query": "What is the current weather in Seattle?"
+}
+```
+
 ## What this project teaches
 
 - How to design an agent control loop
@@ -16,18 +41,18 @@ An end-to-end reference project for building an **agentic AI system** with LLM r
 ## Architecture
 
 ```mermaid
-flowchart TD
-    U[User / Client] --> APIGW[Amazon API Gateway]
-    APIGW --> L[Lambda: Agent Orchestrator]
-    L --> DDB[(DynamoDB: Session State)]
-    L --> B[Amazon Bedrock: LLM]
-    L --> T[Tool Registry]
-    T --> EXT[External APIs / Internal Services]
-    L --> MEM[Memory Layer]
-    MEM --> S3[(S3: Documents + Logs)]
-    MEM --> KB[Bedrock Knowledge Base / Vector Store]
-    L --> CW[CloudWatch: Logs + Metrics]
-    L --> APIGW
+flowchart LR
+    User[User / Client] --> Api[Amazon API Gateway]
+    Api --> Lambda[Lambda Agent Orchestrator]
+    Lambda <--> Bedrock[Amazon Bedrock LLM]
+    Lambda <--> DDB[(DynamoDB Session State)]
+    Lambda --> Tools[Tool Registry]
+    Tools --> Weather[Open-Meteo Weather API]
+    Tools --> Internal[Internal APIs / Business Logic]
+    Lambda --> Memory[Memory Retriever]
+    Memory --> S3[(S3 Documents + Logs)]
+    Memory --> KB[Bedrock Knowledge Base / Vector Store]
+    Lambda --> CW[CloudWatch Metrics + Logs]
 ```
 
 ## Agent loop
@@ -110,6 +135,12 @@ pytest
 
 For AWS deployment, configure credentials and deploy the `infra/template.yaml` using AWS SAM or CloudFormation.
 
+## Talking points for recruiters
+
+- “I designed the LLM as a policy function that maps state to actions.”
+- “The orchestrator controls termination, retries, and tool execution instead of trusting the model blindly.”
+- “I separated short-term state from long-term memory to avoid context-window bloat.”
+- “I added observability hooks for latency, tool errors, and task success.”
 
 ## Next improvements
 
