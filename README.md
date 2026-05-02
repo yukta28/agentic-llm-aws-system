@@ -8,6 +8,8 @@ An end-to-end reference project for building an **agentic AI system** with LLM r
 ## Visual architecture
 
 ![Agentic LLM AWS architecture](docs/assets/architecture.svg)
+<img width="1200" height="720" alt="image" src="https://github.com/user-attachments/assets/125315c8-7a9e-404f-b0ed-bfa9a70d260e" />
+
 
 This project now includes a **real API tool** using Open-Meteo, so the agent can call live weather data instead of only mock functions.
 
