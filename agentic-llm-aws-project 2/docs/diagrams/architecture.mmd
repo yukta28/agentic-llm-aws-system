@@ -1,0 +1,25 @@
+flowchart LR
+    User[User / Client] --> Api[Amazon API Gateway]
+    Api --> Lambda[Lambda Agent Orchestrator]
+
+    Lambda <--> Bedrock[Amazon Bedrock LLM]
+    Lambda <--> DDB[(DynamoDB Session State)]
+    Lambda --> Tools[Tool Registry]
+    Tools --> Weather[Open-Meteo Weather API]
+    Tools --> Internal[Internal APIs / Business Logic]
+
+    Lambda --> Memory[Memory Retriever]
+    Memory --> S3[(S3 Documents + Logs)]
+    Memory --> KB[Bedrock Knowledge Base / Vector Store]
+
+    Lambda --> CW[CloudWatch Metrics + Logs]
+
+    classDef aws fill:#fff7e6,stroke:#b7791f,stroke-width:2px;
+    classDef tool fill:#ecfdf5,stroke:#047857,stroke-width:2px;
+    classDef data fill:#eef2ff,stroke:#4338ca,stroke-width:2px;
+    classDef obs fill:#fdf2f8,stroke:#be185d,stroke-width:2px;
+
+    class Api,Lambda,Bedrock aws;
+    class Tools,Weather,Internal tool;
+    class DDB,S3,KB,Memory data;
+    class CW obs;

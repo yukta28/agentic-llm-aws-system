@@ -1,0 +1,85 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-opacity="0.18"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#333"/>
+    </marker>
+    <style>
+      .box{fill:#fff;stroke:#243b53;stroke-width:2;rx:16;filter:url(#shadow)}
+      .aws{fill:#fff7e6;stroke:#b7791f;stroke-width:2;rx:16;filter:url(#shadow)}
+      .data{fill:#eef2ff;stroke:#4338ca;stroke-width:2;rx:16;filter:url(#shadow)}
+      .tool{fill:#ecfdf5;stroke:#047857;stroke-width:2;rx:16;filter:url(#shadow)}
+      .obs{fill:#fdf2f8;stroke:#be185d;stroke-width:2;rx:16;filter:url(#shadow)}
+      .title{font-family:Inter,Arial,sans-serif;font-size:30px;font-weight:700;fill:#102a43}
+      .label{font-family:Inter,Arial,sans-serif;font-size:18px;font-weight:700;fill:#102a43}
+      .small{font-family:Inter,Arial,sans-serif;font-size:14px;fill:#334e68}
+      .arrow{stroke:#333;stroke-width:2.2;fill:none;marker-end:url(#arrow)}
+      .dash{stroke:#555;stroke-width:2;fill:none;stroke-dasharray:6 6;marker-end:url(#arrow)}
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="#f8fafc"/>
+  <text x="60" y="56" class="title">Agentic LLM System on AWS — Production-Style Architecture</text>
+  <text x="60" y="84" class="small">The deterministic orchestrator owns the loop; the LLM proposes structured actions; tools ground the system in real data.</text>
+
+  <rect x="60" y="150" width="180" height="82" class="box"/>
+  <text x="150" y="184" text-anchor="middle" class="label">Client</text>
+  <text x="150" y="207" text-anchor="middle" class="small">Web app / CLI</text>
+
+  <rect x="310" y="135" width="190" height="110" class="aws"/>
+  <text x="405" y="174" text-anchor="middle" class="label">API Gateway</text>
+  <text x="405" y="199" text-anchor="middle" class="small">POST /agent/query</text>
+  <text x="405" y="220" text-anchor="middle" class="small">Auth + routing</text>
+
+  <rect x="570" y="110" width="240" height="155" class="aws"/>
+  <text x="690" y="150" text-anchor="middle" class="label">Lambda Orchestrator</text>
+  <text x="690" y="177" text-anchor="middle" class="small">Loads state</text>
+  <text x="690" y="198" text-anchor="middle" class="small">Builds prompt</text>
+  <text x="690" y="219" text-anchor="middle" class="small">Parses JSON action</text>
+  <text x="690" y="240" text-anchor="middle" class="small">Controls max steps</text>
+
+  <rect x="900" y="110" width="230" height="110" class="aws"/>
+  <text x="1015" y="150" text-anchor="middle" class="label">Amazon Bedrock</text>
+  <text x="1015" y="177" text-anchor="middle" class="small">LLM reasoning</text>
+  <text x="1015" y="198" text-anchor="middle" class="small">Structured action JSON</text>
+
+  <rect x="570" y="330" width="240" height="150" class="tool"/>
+  <text x="690" y="370" text-anchor="middle" class="label">Tool Registry</text>
+  <text x="690" y="397" text-anchor="middle" class="small">Schema validation</text>
+  <text x="690" y="418" text-anchor="middle" class="small">get_current_weather()</text>
+  <text x="690" y="439" text-anchor="middle" class="small">get_order_status()</text>
+  <text x="690" y="460" text-anchor="middle" class="small">calculator()</text>
+
+  <rect x="900" y="350" width="230" height="100" class="tool"/>
+  <text x="1015" y="388" text-anchor="middle" class="label">External APIs</text>
+  <text x="1015" y="415" text-anchor="middle" class="small">Open-Meteo weather API</text>
+
+  <rect x="300" y="340" width="210" height="120" class="data"/>
+  <text x="405" y="380" text-anchor="middle" class="label">DynamoDB</text>
+  <text x="405" y="407" text-anchor="middle" class="small">Session state</text>
+  <text x="405" y="428" text-anchor="middle" class="small">Intermediate steps</text>
+
+  <rect x="300" y="520" width="210" height="110" class="data"/>
+  <text x="405" y="560" text-anchor="middle" class="label">S3 / Knowledge Base</text>
+  <text x="405" y="587" text-anchor="middle" class="small">Documents + logs</text>
+  <text x="405" y="608" text-anchor="middle" class="small">Retrieved memory</text>
+
+  <rect x="570" y="540" width="240" height="90" class="obs"/>
+  <text x="690" y="577" text-anchor="middle" class="label">CloudWatch</text>
+  <text x="690" y="604" text-anchor="middle" class="small">Latency, failures, tool calls</text>
+
+  <path d="M240 191 L310 191" class="arrow"/>
+  <path d="M500 191 L570 191" class="arrow"/>
+  <path d="M810 165 L900 165" class="arrow"/>
+  <path d="M900 195 L810 215" class="arrow"/>
+  <path d="M690 265 L690 330" class="arrow"/>
+  <path d="M810 400 L900 400" class="arrow"/>
+  <path d="M900 430 L810 450" class="arrow"/>
+  <path d="M570 390 L510 390" class="arrow"/>
+  <path d="M510 420 L570 430" class="arrow"/>
+  <path d="M570 225 C500 260, 465 300, 430 340" class="dash"/>
+  <path d="M570 540 C500 520, 470 500, 440 460" class="dash"/>
+  <path d="M690 480 L690 540" class="dash"/>
+</svg>
