@@ -110,12 +110,6 @@ pytest
 
 For AWS deployment, configure credentials and deploy the `infra/template.yaml` using AWS SAM or CloudFormation.
 
-## Talking points for recruiters
-
-- “I designed the LLM as a policy function that maps state to actions.”
-- “The orchestrator controls termination, retries, and tool execution instead of trusting the model blindly.”
-- “I separated short-term state from long-term memory to avoid context-window bloat.”
-- “I added observability hooks for latency, tool errors, and task success.”
 
 ## Next improvements
 
